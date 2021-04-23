@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!--suppress ALL-->
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="commons/manage_fragments::head(~{:: title})"/>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	<title>后台博客管理</title>
+	<!-- 		<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
+            <link rel="stylesheet" href="../css/semantic.min.css"> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+	<link rel="stylesheet" href="../../css/me.css" th:href="@{/css/me.css}">
+<!--	<link rel="stylesheet" href="../../css/pageing.css" th:href="@{/css/pageing.css}">-->
+	<script type="text/javascript" src="../../js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" src="../../js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>
+</head>
+<body>
+<!-- 导航-->
+<nav th:replace="commons/manage_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini m-nav-background">
+<!--	<div class="ui container">-->
+<!--		<div class="ui inverted secondary stackable menu">-->
+<!--			<h2 class="ui teal header item" >后台分类管理页面</h2>-->
+<!--			<a href="#" class="item m-item m-mobile-hide"><i class="home icon"></i>博客管理</a>-->
+<!--			<a href="#" class="item m-item m-mobile-hide"><i class="idea icon"></i>分类</a>-->
+<!--			<a href="#" class="item m-item m-mobile-hide"><i class="tags icon"></i>标签</a>-->
+<!--			<div class="right m-item m-mobile-hide menu">-->
+<!--				<div class="ui item dropdown">-->
+<!--					<div class="text">-->
+<!--						<img src="https://unsplash.it/100/100?image=1005" alt=""  class="ui avatar image">李仁密-->
+<!--					</div>-->
+<!--					<i class="dropdown icon"></i>-->
+<!--					<div class="menu">-->
+<!--						<a href="#" class="item">注销</a>-->
+<!--						<a href="#" class="item">修改密码</a>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--	<a href="#" class="ui black menu-toggle icon button m-right-top m-mobile-show">-->
+<!--		<i class="sidebar icon"></i>-->
+<!--	</a>-->
+</nav>
+<!--二级导航-->
+<div class="ui attached menu">
+	<div class="ui container">
+		<div class="right menu">
+			<a class="item" href="#">发布</a>
+			<a class="teal active item" href="#">列表</a>
+		</div>
+	</div>
+</div>
+<!-- 中间内容 -->
+<div class="m-padded-tb-massive">
+	<div class="ui container"> <!--移动端适应-->
+		<table class="ui table">
+			<thead>
+			<tr>
+				<th>序号</th>
+				<th>名称</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<tbody id="tagtable">
+			<tr>
+				<td>1</td>
+				<td>SpringBoot</td>
+				<td>
+					<a class="ui mini teal button" id="editTag">编辑</a>
+					<a class="ui mini red button" id="deleteTag" onclick="deleteTag(this)">删除</a>
+				</td>
+			</tr>
+			</tbody>
+			<tfoot>
+			<tr>
+				<th colspan="10">
+					<div class="ui mini orange inverted pagination menu" id="pageing">
+<!--						<a class="ui mini item" href="#" id="previous">上一页</a>-->
+<!--						<a class="ui mini item" href="#" id="next">下一页</a>-->
+
+					</div>
+					<a href="#" class="ui small right floated teal button" id="addtag">新增</a>
+				</th>
+			</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<br>
+<br>
+<br>
+<br>
+<!-- 底部-->
+<footer th:replace="commons/manage_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+	<div class="ui center aligned container">
+		<div class="ui inverted stackable divided grid">
+			<div class="three wide column">
+				<img src="../img/wechat.png" th:src="@{/img/wechat.png}" class="ui centered rounded image f-img" alt=""></img>
+			</div>
+			<div class="three wide column">
+				<h4 class="ui inverted header m-text-spaced m-opacity-mini">最新博客</h4>
+				<div class="ui inverted link list">
+					<a href="#" class="item">用户故事</a>
+					<a href="#" class="item">关于刻意练习的清单</a>
+					<a href="#" class="item">成功要坚持</a>
+				</div>
+			</div>
+			<div class="three wide column">
+				<h4 class="ui inverted header m-text-spaced m-opacity-mini">联系我</h4>
+				<div class="ui inverted link list">
+					<a href="#" class="item">Email:swust_dl@163.com</a>
+					<a href="#" class="item">QQ:1270487312</a>
+				</div>
+			</div>
+			<div class="seven wide column">
+				<h4 class="ui inverted header m-text-spaced">Blog</h4>
+				<p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客、会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
+			</div>
+		</div>
+		<div class="ui inverted section divider"></div>
+		<p align="center" class="m-text-spaced m-opacity-tiny">Copyright@2020-2021XhuSwuster</p>
+	</div>
+</footer>
+</body>
+<script type="text/javascript" src="../../js/pageing.js" th:src="@{/js/pageing.js}"></script>
+<script type="text/javascript" src="../../js/manage_top_nav.js" th:src="@{/js/manage_top_nav.js}"></script>
+<script type="text/javascript" src="../js/home.js" th:src="@{/js/home.js}"></script>
+<script type="text/javascript" src="../js/manage_type.js" th:src="@{/js/manage_type.js}"></script>
+<script type="text/javascript" src="../../js/manage.js" th:src="@{/js/manage.js}"></script>
+</html>

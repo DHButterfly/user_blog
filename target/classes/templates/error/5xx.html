@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="commons/_fragments :: head(~{::title})">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>5xx错误页面</title>
+</head>
+<body>
+<!-- 导航 -->
+<nav th:replace="commons/_fragments::menu(0)" class="ui inverted attached segment m-padded-tb-mini">
+</nav>
+<!-- 中间内容 container做页面适配-->
+<div class="m-container-small m-padded-tb-massive">
+    <div class="ui error center aligned message">
+        <div class="ui container">
+            <h4 class="text-shadow">[[${status}]]</h4>
+            <p style="font-size: 20px">服务器出错了！</p>
+            <h2>status:[[${status}]]</h2><br>
+            <h2>timestamp:[[${timestamp}]]</h2>
+            <h2>exception:[[${exception}]]</h2>
+            <h2>message:[[${message}]]</h2>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<!-- 底部 -->
+<footer th:replace="commons/_fragments::footer" class="ui inverted vertical segment m-padded-tb-massive">
+</footer>
+</body>
+</html>

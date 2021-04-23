@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title th:replace="${title}">Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+<!--    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>-->
+<!--    <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{/css/semantic.min.css}">-->
+    <!-- 博客详情优化排版 -->
+    <link rel="stylesheet" href="../../static/css/typo.css" th:href="@{/css/typo.css}">
+    <!-- 动画 -->
+    <link rel="stylesheet" href="../../static/css/animate.min.css" th:href="@{/css/animate.min.css}">
+    <link rel="stylesheet" href="../../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+<!--    <link rel="stylesheet" href="../../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">-->
+    <link rel="stylesheet" href="../../static/lib/Pio/static/css/live2d.css" th:href="@{/lib/Pio/static/css/live2d.css}"/>
+
+    <script type="text/javascript" src="../../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+    <script src="../../static/js/semantic.min.js" type="text/javascript" th:src="@{/js/semantic.min.js}"></script>
+    <!--		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>-->
+    <!-- <script src="https://cdn.jsdelivr.net/semantic-ui/2.4.2/semantic.min.js"></script> -->
+    <!-- 代码高亮 -->
+    <script type="text/javascript" src="../../static/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>
+    <!-- 目录生成 -->
+    <script type="text/javascript" src="../../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+    <!-- 二维码生成 -->
+    <script type="text/javascript" src="../../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
+    <!-- 平滑滚动 -->
+    <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+    <!-- 滚动侦测 -->
+    <script type="text/javascript" src="../static/lib/waypoints/jquery.waypoints.js" th:src="@{/lib/waypoints/jquery.waypoints.js}"></script>
+</head>
+<nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini m-nav-background">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item" >Blog</h2>
+            <a id="index-nav"  class="item m-item m-mobile-hide" th:classappend="${n==1}? 'active'"><i class="home icon"></i>首页</a>
+            <a id="type-nav"  class="item m-item m-mobile-hide" th:classappend="${n==2}? 'active'"><i class="idea icon"></i>分类</a>
+            <a id="tag-nav"  class="item m-item m-mobile-hide" th:classappend="${n==3}? 'active'"><i class="tags icon"></i>标签</a>
+            <a id="archive-nav"  class="item m-item m-mobile-hide" th:classappend="${n==4}? 'active'"><i class="folder icon"></i>归档</a>
+            <a id="about-nav"  class="item m-item m-mobile-hide" th:classappend="${n==5}? 'active'"><i class="user icon"></i>关于我</a>
+            <div class="right item m-item m-mobile-hide">
+                <div class="ui icon inverted transparent input">
+                    <input type="text" placeholder="搜索">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui black menu-toggle icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted stackable divided grid">
+            <div class="four wide column">
+                <img src="../static/img/wechat.png" th:src="@{/img/wechat.png}" class="ui centered rounded image f-img" alt=""></img>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header m-text-spaced m-opacity-mini">友情链接</h4>
+                <div class="ui inverted link list">
+                    <a href="https://blog.csdn.net/dl962454?spm=1010.2135.3001.5113" target="_blank" class="item">时光、疏离了记忆づ童话的博客</a>
+<!--                    <a href="#" class="item">关于刻意练习的清单</a>-->
+<!--                    <a href="#" class="item">成功要坚持</a>-->
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header m-text-spaced m-opacity-mini">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email:swust_dl@163.com</a>
+                    <a href="#" class="item">QQ:1270487312</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header m-text-spaced">Blog</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客、会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p align="center" class="m-text-spaced m-opacity-tiny">Copyright@2020-2021XhuSwuster</p>
+    </div>
+</footer>
+<!--    对于js可以采用两种，一种外层包一个div定义一下fragment，另一种采用
+<th:block th:fragment="script">方式定义，采用--><!--/*/<th:block th:replace="">/*/-->
+<body>
+    <script type="text/javascript" src="../../js/manage.js" th:src="@{/js/manage.js}"></script>
+</body>
+</html>

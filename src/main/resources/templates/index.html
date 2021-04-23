@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!--suppress ALL-->
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<!--	<head th:replace="commons/_fragments :: head(~{::title})">-->
+	<head th:replace="commons/_fragments :: head(~{::title})">
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>首页</title>
+		<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.min.css'>
+		<link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{/css/semantic.min.css}">
+		<link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+		<link rel="stylesheet" href="../../static/lib/Pio/static/css/live2d.css" th:href="@{/lib/Pio/static/css/live2d.css}"/>
+		<script type="text/javascript" src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+		<script type="text/javascript" src="../static/js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>
+	</head>
+	<body>
+		<!-- 导航 th:replace="commons/_fragments:: menu(1)"-->
+		<nav th:replace="commons/_fragments:: menu(1)"  class="ui inverted attached segment m-padded-tb-mini m-nav-background">
+			<div class="ui container">
+				<div class="ui inverted secondary stackable menu">
+					<h2 class="ui teal header item" >Blog</h2>
+					<a href="#" class="item m-item m-mobile-hide"><i class="home icon"></i>首页</a>
+					<a href="#" class="item m-item m-mobile-hide"><i class="idea icon"></i>分类</a>
+					<a href="#" class="item m-item m-mobile-hide"><i class="tags icon"></i>标签</a>
+					<a href="#" class="item m-item m-mobile-hide"><i class="folder icon"></i>归档</a>
+					<a href="#" class="item m-item m-mobile-hide"><i class="user icon"></i>关于我</a>
+					<div class="right item m-item m-mobile-hide">
+						<div class="ui icon inverted transparent input">
+							<input type="text" placeholder="搜索">
+							<i class="search link icon"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<a href="#" class="ui black menu-toggle icon button m-right-top m-mobile-show">
+				<i class="sidebar icon"></i>
+			</a>
+		</nav>
+		<!-- 中间内容 -->
+		<div class="m-padded-tb-massive">
+			<div class="ui container"> <!--移动端适应-->
+				<div class="ui stackable grid">
+					<!-- 左边博客列表 -->
+					<div class="eleven wide column">
+						<!-- header -->
+						<div class="ui top attached segment">
+							<div class="ui middle aligned two column grid">
+								<div class="column">
+									<h2 class="ui teal header">博客</h2>
+								</div>
+								<div class="right aligned column">
+									共 <h2 class="ui orange header m-inline-block m-text-thin" id="totalBlog">14</h2>篇
+								</div>
+							</div>
+						</div>
+						<!-- content -->
+						<div class="ui attached segment" id="blog-list">
+						</div>
+<!--						<div class="ui middle aligned" id="pageing" style="width: 100%">-->
+<!--						</div>-->
+						<!-- footer -->
+						<div class="ui bottom attatched segment">
+							<div class="ui middle aligned two column grid" id="pageing">
+								<div class="column">
+									<a class="ui mini button teal basic" href="#">上一页</a>
+								</div>
+								<div class="right aligned column">
+									<a class="ui mini button teal basic" href="#">下一页</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 右边top -->
+					<div class="five wide column">
+						<!-- 分类 -->
+						<div class="ui segments">
+							<div class="ui secondary segment">
+								<div class="ui two column grid">
+									<div class="column">
+										<i class="idea icon"></i>分类
+									</div>
+									<div class="right aligned column">
+										<a href="/blog/pre_nav.do?id=2" target="_blank">more<i class="angle double right icon"></i></a>
+									</div>
+								</div>
+							</div>
+							<div class="ui segment teal">
+								<div class="ui fluid vertical menu" id="type-num">
+								</div>
+								
+							</div>
+							
+						</div>
+					    <!-- 标签 -->
+						<div class="ui segments m-margin-top-large">
+							<div class="ui secondary segment">
+								<div class="ui two column grid">
+									<div class="column">
+										<i class="tags icon"></i>标签
+									</div>
+									<div class="right aligned column">
+										<a href="/blog/pre_nav.do?id=3" target="_blank">more<i class="angle double right icon"></i></a>
+									</div>
+								</div>
+							</div>
+							<div class="ui teal segment" id="tag-num">
+							</div>
+						</div>
+						<!-- 最新推荐 -->
+						<div class="ui segments m-margin-top-large">
+							<div class="ui secondary segment" id="last-recommend">
+<!-- 								< div class="ui two column grid">
+									< div class="column"> -->
+										<i class="bookmark icon"></i>最新推荐
+<!-- 									</div>
+									<div class="right aligned column">
+										<a href="#" target="_blank">more<i class="angle double right icon"></i></a>
+									</div>
+								</div> -->
+							</div>
+<!--							<div class="ui segment">-->
+<!--								<a href="#" target="_blank" class="m-color-black m-text-thin">用户故事{UserStory}</a>-->
+<!--							</div>-->
+<!--							<div class="ui segment">-->
+<!--								<a href="#" target="_blank" class="m-color-black m-text-thin">用户故事{UserStory}</a>-->
+<!--							</div>-->
+<!--							<div class="ui segment">-->
+<!--								<a href="#" target="_blank" class="m-color-black m-text-thin">用户故事{UserStory}</a>-->
+<!--							</div>-->
+<!--							<div class="ui segment">-->
+<!--								<a href="#" target="_blank" class="m-color-black m-text-thin">用户故事{UserStory}</a>-->
+<!--							</div>-->
+						</div>
+						<!-- 二维码 -->
+						<h4 class="ui divider horizontal header m-margin-top-large">扫码关注我</h4>
+						<div class="ui centered card m-pic">
+							<img src="../static/img/wechat.png" th:src="@{/img/wechat.png}" alt="" class="ui rounded image"></img>
+						</div>
+						<div id="landlord">
+							<div class="message" style="opacity:0;"></div>
+							<canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+							<div class="hide-button">隐藏</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 底部th:replace="commons/_fragments::footer" -->
+		<footer th:replace="commons/_fragments::footer" class="ui inverted vertical segment m-padded-tb-massive">
+			<div class="ui center aligned container">
+				<div class="ui inverted stackable divided grid">
+					<div class="three wide column">
+						<img src="../static/img/wechat.png" th:src="@{/img/wechat.png}" class="ui centered rounded image f-img" alt=""></img>
+					</div>
+					<div class="three wide column">
+						<h4 class="ui inverted header m-text-spaced m-opacity-mini">友情链接</h4>
+						<div class="ui inverted link list">
+							<a href="https://blog.csdn.net/dl962454?spm=1010.2135.3001.5113" class="item">时光、疏离了记忆づ童话的博客</a>
+							<a href="#" class="item">关于刻意练习的清单</a>
+							<a href="#" class="item">成功要坚持</a>
+						</div>
+					</div>
+					<div class="three wide column">
+						<h4 class="ui inverted header m-text-spaced m-opacity-mini">联系我</h4>
+						<div class="ui inverted link list">
+							<a href="#" class="item">Email:swust_dl@163.com</a>
+							<a href="#" class="item">QQ:1270487312</a>
+						</div>
+					</div>
+					<div class="seven wide column">
+						<h4 class="ui inverted header m-text-spaced">Blog</h4>
+						<p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客、会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
+					</div>
+				</div>
+				<div class="ui inverted section divider"></div>
+				<p align="center" class="m-text-spaced m-opacity-tiny">Copyright@2020-2021XhuSwuster</p>
+			</div>
+		</footer>
+	</body>
+<!--	<script language='text/javascript' src='../js/manage_index.js' th:src='@{/js/manage_index.js}'></script>-->
+	<script type="text/javascript" src="../static/js/home.js" th:src="@{/js/home.js}"></script>
+	<script type="text/javascript" src="../static/js/index.js" th:src="@{/js/index.js}"></script>
+
+<!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>-->
+<!--看板娘插件-->
+<!--<script type="text/javascript">-->
+<!--	var message_Path = 'http://localhost:8888/blog/lib/live2d/js/message.js' //message.js的目录（必须填写，否则无法加载交互的文字）-->
+<!--	var home_Path = 'http://localhost:8888/blog/' //网站的根目录-->
+<!--</script>-->
+
+<!--<script type="text/javascript" src="../static/lib/live2d/js/live2d.js" th:src="@{/lib/live2d/js/live2d.js}"></script>-->
+<!--<script type="text/javascript" src="../static/lib/live2d/js/message.js" th:src="@{/lib/live2d/js/message.js}"></script>-->
+<!--<script type="text/javascript">-->
+<!--	loadlive2d("live2d", "http://localhost:8888/blog/lib/live2d/Pio/model.json"); //model.json和其模型等都需要放在服务器网站上-->
+<!--</script>-->
+
+<script type="text/javascript">
+    var message_Path = 'http://localhost:8888/blog/lib/Pio/static/js/message.js' //message.js的目录（必须填写，否则无法加载交互的文字）
+    var home_Path = 'http://localhost:8888/blog/' //网站的根目录
+</script>
+
+<script type="text/javascript" src="../static/lib/Pio/static/js/l2d.js" th:src="@{/lib/Pio/static/js/l2d.js}"></script>
+<script type="text/javascript" src="../static/lib/Pio/static/js/message.js" th:src="@{/lib/Pio/static/js/message.js}"></script>
+<script type="text/javascript">
+    loadlive2d("live2d", "http://localhost:8888/blog/lib/Pio/models/pio/model.json");
+    //model.json和其模型等都需要放在服务器网站上，需要什么模型更换model.json即可hijiki/model.json、pio/model.json、tororo/model.json
+</script>
+	<script type="text/javascript" src="../static/js/pre_top_nav.js" th:src="@{/js/pre_top_nav.js}"></script>
+</html>

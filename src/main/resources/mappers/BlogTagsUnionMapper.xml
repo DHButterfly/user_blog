@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dl.blog.mapper.BlogTagsUnionMapper">
+  <resultMap id="BaseResultMap" type="com.dl.blog.pojo.BlogTagsUnion">
+    <constructor>
+      <idArg column="bid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="tid" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    bid, tid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from union_blog_tags
+    where bid = #{bid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from union_blog_tags
+    where bid = #{bid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dl.blog.pojo.BlogTagsUnion">
+    insert into union_blog_tags (bid, tid)
+    values (#{bid,jdbcType=INTEGER}, #{tid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dl.blog.pojo.BlogTagsUnion">
+    insert into union_blog_tags
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bid != null">
+        bid,
+      </if>
+      <if test="tid != null">
+        tid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bid != null">
+        #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="tid != null">
+        #{tid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dl.blog.pojo.BlogTagsUnion">
+    update union_blog_tags
+    <set>
+      <if test="tid != null">
+        tid = #{tid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dl.blog.pojo.BlogTagsUnion">
+    update union_blog_tags
+    set tid = #{tid,jdbcType=VARCHAR}
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  <select id="selectTagsById" parameterType="java.lang.Integer" resultType="String">
+    select
+    tid
+    from union_blog_tags
+    where bid = #{bid,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAllTagsUnion" resultType="com.dl.blog.pojo.BlogTagsUnion">
+    select
+    <include refid="Base_Column_List"/>
+    from union_blog_tags
+  </select>
+
+</mapper>

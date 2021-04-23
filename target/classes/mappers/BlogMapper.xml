@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dl.blog.mapper.BlogMapper">
+  <resultMap id="BaseResultMap" type="com.dl.blog.pojo.Blog">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="first_picture" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="views" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="flag" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="appreciation" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="shareStatement" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="commentabled" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="published" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="recommend" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="type_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.dl.blog.pojo.Blog">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="first_picture" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="views" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="flag" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="appreciation" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="shareStatement" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="commentabled" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="published" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="recommend" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="type_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+
+
+  <resultMap id="ManageBlogDetailsVOMap" type="com.dl.blog.vo.ManageBlogDetailsVO">
+  <id column="id" property="id"/>
+  <result column="first_picture" property="firstPicture" />
+  <result column="flag" property="flag" />
+  <result column="views" property="views" />
+  <result column="appreciation" property="appreciation" />
+  <result column="shareStatement" property="sharestatement" />
+  <result column="commentabled" property="commentabled" />
+  <result column="published" property="published" />
+  <result column="recommend" property="recommend" />
+  <result column="create_time" property="createTime" />
+  <result column="update_time" property="updateTime" />
+  <result column="type_id" property="typeId" />
+  <result column="content" property="content" />
+  <result column="description" property="description" />
+  <association property="tagIds" column="id" select="com.dl.blog.mapper.BlogTagsUnionMapper.selectTagsById" fetchType="eager"/>
+  <!--    <collection property="blogCommentList" column="id" select="com.changzhen.mybatis.mapper.BankCardMapper.findBankCardsByUserId"/>-->
+</resultMap>
+  <sql id="Base_Column_List">
+    id, title, first_picture, views, flag, appreciation, shareStatement, commentabled, 
+    published, recommend, create_time, update_time, type_id, user_id, description
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from blog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dl.blog.pojo.Blog" useGeneratedKeys="true" keyProperty="id">
+    insert into blog (id, title, first_picture, 
+      views, flag, appreciation, 
+      shareStatement, commentabled, published, 
+      recommend, create_time, update_time, 
+      type_id, user_id, description, 
+      content)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{firstPicture,jdbcType=VARCHAR}, 
+      #{views,jdbcType=INTEGER}, #{flag,jdbcType=BIT}, #{appreciation,jdbcType=BIT}, 
+      #{sharestatement,jdbcType=BIT}, #{commentabled,jdbcType=BIT}, #{published,jdbcType=BIT}, 
+      #{recommend,jdbcType=BIT}, now(), now(),
+      #{typeId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dl.blog.pojo.Blog">
+    insert into blog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="firstPicture != null">
+        first_picture,
+      </if>
+      <if test="views != null">
+        views,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="appreciation != null">
+        appreciation,
+      </if>
+      <if test="sharestatement != null">
+        shareStatement,
+      </if>
+      <if test="commentabled != null">
+        commentabled,
+      </if>
+      <if test="published != null">
+        published,
+      </if>
+      <if test="recommend != null">
+        recommend,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPicture != null">
+        #{firstPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="views != null">
+        #{views,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=BIT},
+      </if>
+      <if test="appreciation != null">
+        #{appreciation,jdbcType=BIT},
+      </if>
+      <if test="sharestatement != null">
+        #{sharestatement,jdbcType=BIT},
+      </if>
+      <if test="commentabled != null">
+        #{commentabled,jdbcType=BIT},
+      </if>
+      <if test="published != null">
+        #{published,jdbcType=BIT},
+      </if>
+      <if test="recommend != null">
+        #{recommend,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dl.blog.pojo.Blog">
+    update blog
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPicture != null">
+        first_picture = #{firstPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="views != null">
+        views = #{views,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=BIT},
+      </if>
+      <if test="appreciation != null">
+        appreciation = #{appreciation,jdbcType=BIT},
+      </if>
+      <if test="sharestatement != null">
+        shareStatement = #{sharestatement,jdbcType=BIT},
+      </if>
+      <if test="commentabled != null">
+        commentabled = #{commentabled,jdbcType=BIT},
+      </if>
+      <if test="published != null">
+        published = #{published,jdbcType=BIT},
+      </if>
+      <if test="recommend != null">
+        recommend = #{recommend,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+        update_time = now(),
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dl.blog.pojo.Blog">
+    update blog
+    set title = #{title,jdbcType=VARCHAR},
+      first_picture = #{firstPicture,jdbcType=VARCHAR},
+      views = #{views,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=BIT},
+      appreciation = #{appreciation,jdbcType=BIT},
+      shareStatement = #{sharestatement,jdbcType=BIT},
+      commentabled = #{commentabled,jdbcType=BIT},
+      published = #{published,jdbcType=BIT},
+      recommend = #{recommend,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      type_id = #{typeId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dl.blog.pojo.Blog">
+    update blog
+    set title = #{title,jdbcType=VARCHAR},
+      first_picture = #{firstPicture,jdbcType=VARCHAR},
+      views = #{views,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=BIT},
+      appreciation = #{appreciation,jdbcType=BIT},
+      shareStatement = #{sharestatement,jdbcType=BIT},
+      commentabled = #{commentabled,jdbcType=BIT},
+      published = #{published,jdbcType=BIT},
+      recommend = #{recommend,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      type_id = #{typeId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <resultMap id="BlogListVOMaps" type="com.dl.blog.vo.ManageBlogListVO">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="type_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="recommend" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="published" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <select id="selectAllBlogs" resultType="com.dl.blog.vo.ManageBlogListVO" resultMap="BlogListVOMaps">
+       select
+         id,title,type_id,recommend,published,update_time
+       from blog
+  </select>
+
+
+  <select id="selectByConditions" resultMap="BlogListVOMaps">
+    select
+    id,title,type_id,recommend,published,update_time
+    from blog
+    <!--    <trim prefix="WHERE" prefixOverrides="AND|OR ">-->
+    <!--      <if test="recommend!=null and recommend!=''">-->
+    <!--          recommend=false-->
+    <!--      </if>-->
+    <!--    </trim>-->
+    <!-- where标签可以自动添加where，同时处理sql语句中第一个and关键字 -->
+    --     如果 where 元素与你期望的不太一样，你也可以通过自定义 trim 元素来定制 where 元素的功能。比如，和 where 元素等价的自定义 trim 元素为
+    <where>
+      recommend=#{recommend,jdbcType=BIT}
+      <if test="typeId != 0">
+        and type_id=#{typeId,jdbcType=INTEGER}
+      </if>
+      <if test='title != null and title!=""'>
+        and title LIKE concat('%',#{title},'%')
+      </if>
+    </where>
+  </select>
+
+
+  <select id="selectManageDetailsById" parameterType="java.lang.Integer" resultMap="ManageBlogDetailsVOMap">
+    select
+    id, title, first_picture, views, flag, appreciation, shareStatement, commentabled,
+    published, recommend, create_time, update_time, type_id,user_id, description,
+    <include refid="Blob_Column_List" />
+    from blog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectBeforeUpdateBlog" parameterType="java.lang.Integer" resultMap="ManageBlogDetailsVOMap">
+    select views,create_time
+    from blog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <resultMap id="preEndBlogListMap" type="com.dl.blog.vo.PreEndBlogListVO">
+    <id column="id" property="id"/>
+    <result column="title" property="title"/>
+    <result column="first_picture" property="firstPicture"/>
+    <result column="views" property="views"/>
+    <result column="update_time" property="updateTime" />
+    <result column="type_id" property="typeId" />
+    <result column="user_id" property="userId" />
+    <result column="description" property="description" />
+    <result column="flag" property="flag" />
+    <association property="blogType" column="type_id" select="com.dl.blog.mapper.BlogTypeMapper.selectByPrimaryKey"/>
+    <association property="blogUser" column="user_id" select="com.dl.blog.mapper.BlogUserMapper.selectPreEndUserById"/>
+  </resultMap>
+
+  <select id="selectPreEndBlogList" resultMap="preEndBlogListMap">
+      select id,title,first_picture,views,update_time,type_id,user_id,description from blog
+<!--where标签会自动处理第一个为null时候的and问题,where 1=1但是这种做法有一个最大的弊端，就是导致数据表上的索引失效，如果有索引的话。而且还是一个垃圾条件-->
+    <where>
+      <if test="typeId!=0">
+        and type_id=#{typeId,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectLastRecommend" resultType="com.dl.blog.vo.PreEndBlogRecommendVO">
+    select id,title from blog where recommend='1' order by update_time desc limit 6
+  </select>
+
+
+  <resultMap id="PreBlogDetailsVOMap" type="com.dl.blog.vo.ManageBlogDetailsVO">
+    <id column="id" property="id"/>
+    <result column="first_picture" property="firstPicture" />
+    <result column="flag" property="flag" />
+    <result column="views" property="views" />
+    <result column="title" property="title" />
+    <result column="appreciation" property="appreciation" />
+    <result column="shareStatement" property="sharestatement" />
+    <result column="commentabled" property="commentabled" />
+    <result column="published" property="published" />
+    <result column="recommend" property="recommend" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="type_id" property="typeId" />
+    <result column="user_id" property="userId" />
+    <result column="content" property="content" />
+    <result column="description" property="description" />
+    <association property="blogUser" column="user_id" select="com.dl.blog.mapper.BlogUserMapper.selectPreEndUserById" fetchType="eager"/>
+    <!--    <collection property="blogCommentList" column="id" select="com.changzhen.mybatis.mapper.BankCardMapper.findBankCardsByUserId"/>-->
+  </resultMap>
+  <select id="selectPreBlogDetails" resultMap="PreBlogDetailsVOMap">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog where id=#{id,jdbcType=INTEGER}
+  </select>
+  <update id="updateViewsById" parameterType="Integer">
+    update blog
+    set
+    views = #{views,jdbcType=INTEGER} where  id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectBlogListByTypeId" resultMap="preEndBlogListMap">
+       select id,title,first_picture,views,update_time,type_id,user_id,description from blog where type_id=#{typeId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAllArchiveBlog" resultMap="preEndBlogListMap">
+      select id,update_time,flag,title from blog group by update_time;
+  </select>
+
+  <select id="selectBlogByTagId" resultMap="preEndBlogListMap">
+    select id,title,first_picture,views,update_time,type_id,user_id,description from blog where id in(select bid from union_blog_tags where find_in_set(#{tagId},tid))
+  </select>
+
+</mapper>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dl.blog.mapper.BlogCommentMapper">
+  <resultMap id="BaseResultMap" type="com.dl.blog.pojo.BlogComment">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="avatar" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="blog_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="parent_comment_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="blogger" javaType="java.lang.Boolean" jdbcType="BIT" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.dl.blog.pojo.BlogComment">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="avatar" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="blog_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="parent_comment_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="blogger" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="comment" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, nickname, email, avatar, create_time, blog_id, parent_comment_id, blogger
+  </sql>
+  <sql id="Blob_Column_List">
+    comment
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from blog_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dl.blog.pojo.BlogComment">
+    insert into blog_comment (nickname, email,
+      avatar, create_time, blog_id, 
+      parent_comment_id, blogger, comment
+      )
+    values ( #{nickname,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+      #{avatar,jdbcType=VARCHAR}, now(), #{blogId,jdbcType=INTEGER},
+      #{parentCommentId,jdbcType=INTEGER}, #{blogger,jdbcType=BIT}, #{comment,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dl.blog.pojo.BlogComment">
+    insert into blog_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="blogId != null">
+        blog_id,
+      </if>
+      <if test="parentCommentId != null">
+        parent_comment_id,
+      </if>
+      <if test="blogger != null">
+        blogger,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blogId != null">
+        #{blogId,jdbcType=INTEGER},
+      </if>
+      <if test="parentCommentId != null">
+        #{parentCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="blogger != null">
+        #{blogger,jdbcType=BIT},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dl.blog.pojo.BlogComment">
+    update blog_comment
+    <set>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blogId != null">
+        blog_id = #{blogId,jdbcType=INTEGER},
+      </if>
+      <if test="parentCommentId != null">
+        parent_comment_id = #{parentCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="blogger != null">
+        blogger = #{blogger,jdbcType=BIT},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dl.blog.pojo.BlogComment">
+    update blog_comment
+    set nickname = #{nickname,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      blog_id = #{blogId,jdbcType=INTEGER},
+      parent_comment_id = #{parentCommentId,jdbcType=INTEGER},
+      blogger = #{blogger,jdbcType=BIT},
+      comment = #{comment,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dl.blog.pojo.BlogComment">
+    update blog_comment
+    set nickname = #{nickname,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      blog_id = #{blogId,jdbcType=INTEGER},
+      parent_comment_id = #{parentCommentId,jdbcType=INTEGER},
+      blogger = #{blogger,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <resultMap id="preEndBlogCommentMap" type="com.dl.blog.vo.PreEndBlogCommentVO">
+    <id column="id" property="id"/>
+    <result column="nickname" property="nickname"/>
+    <result column="email" property="email"/>
+    <result column="avatar" property="avatar"/>
+    <result column="comment" property="comment" />
+    <result column="create_time" property="createTime" />
+    <result column="blog_id" property="blogId" />
+    <result column="blogger" property="blogger" />
+    <result column="parent_comment_id" property="parentComment.id" />
+
+    <association property="parentComment" column="parent_comment_id" select="com.dl.blog.mapper.BlogCommentMapper.selectByPrimaryKey"/>
+  </resultMap>
+
+  <select id="selectBlogCommentByBlogId" resultMap="preEndBlogCommentMap">
+    select
+    id, nickname, email, avatar, create_time, blog_id, parent_comment_id,comment
+    from blog_comment where blog_id=#{blogId,jdbcType=INTEGER} order by create_time desc;
+  </select>
+
+  <select id="selectCommentByIdAndParentId" resultMap="preEndBlogCommentMap">
+    select
+    id, nickname, email, avatar, create_time, blog_id, parent_comment_id,blogger,comment
+    from blog_comment
+    where blog_id=#{blogId,jdbcType=INTEGER}  and parent_comment_id=#{parentCommentId,jdbcType=INTEGER}
+    order by create_time desc;
+  </select>
+
+  <select id="selectByNickName" resultType="com.dl.blog.pojo.BlogComment">
+    select
+    <include refid="Base_Column_List"/>
+    from blog_comment
+    where nickname = #{nickname,jdbcType=VARCHAR}
+  </select>
+</mapper>
